@@ -1,5 +1,6 @@
 workspace "disarRay"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -8,12 +9,15 @@ workspace "disarRay"
 		"Deploy"
 	}
 
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "disarRay/deps/GLFW/include"
 IncludeDir["Glad"] = "disarRay/deps/Glad/include"
 IncludeDir["ImGui"] = "disarRay/deps/imgui"
+
 
 group "Dependencies"
 	include "disarRay/deps/GLFW"
@@ -21,7 +25,6 @@ group "Dependencies"
 	include "disarRay/deps/imgui"
 group ""
 
-startproject "Sandbox"
 
 project "disarRay"
 	location "disarRay"
