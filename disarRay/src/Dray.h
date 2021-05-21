@@ -1,5 +1,8 @@
 #pragma once
 
-#include "disarRay/DrayApp.h"
+#include "disarRay/Logging/Log.h"
+#include "disarRay/Layers/Layer.h"
+#include "disarRay/App/DrayApp.h"
+#include "disarRay/ImGui/ImGuiLayer.h"
 
-#include "disarRay/EntryPoint.h"
+#include "EntryPoint.h"

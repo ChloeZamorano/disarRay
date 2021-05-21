@@ -5,12 +5,10 @@ class Sandbox : public Dray::DrayApp
 public:
 	Sandbox()
 	{
-
+		PushOverlay(new Dray::ImGuiLayer());
 	}
-	~Sandbox()
-	{
 
-	}
+	~Sandbox() {}
 };
 
 Dray::DrayApp* Dray::MakeDrayApp()
