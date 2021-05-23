@@ -12,16 +12,17 @@ namespace Dray
 		MSWindow(const WindowProps& data);
 		~MSWindow();
 
-		void RenderUpdate(LayerStack& stack) override;
+		void RenderStage1() override;
+		void RenderStage2() override;
 
 		inline u32 GetWidth() const override { return m_Data.Width; }
 		inline u32 GetHeight() const override { return m_Data.Height; }
 
+		void* GetNativeWindow() const override { return m_Window; }
+
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
-		
-		void* GetGLFWWindow() const override { return reinterpret_cast<void*>(m_Window); }
 
 	private:
 		virtual void Init(const WindowProps& data);

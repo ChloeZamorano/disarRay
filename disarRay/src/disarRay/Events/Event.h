@@ -18,12 +18,12 @@ namespace Dray
 	enum EventCategory
 	{
 		None		= 0,
-		App			= BIT(0),
-		Cycle		= BIT(1),
-		Input		= BIT(2),
-		Keyboard	= BIT(3),
-		Mouse		= BIT(4),
-		MouseButton = BIT(5),
+		AppEventCategory			= BIT(0),
+		CycleEventCategory			= BIT(1),
+		InputEventCategory			= BIT(2),
+		KeyboardEventCategory		= BIT(3),
+		MouseEventCategory			= BIT(4),
+		MouseButtonEventCategory	= BIT(5),
 	};
 
 #define DRAY_EVENT_TYPE(type) \

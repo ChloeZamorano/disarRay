@@ -16,7 +16,9 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "disarRay/deps/GLFW/include"
 IncludeDir["Glad"] = "disarRay/deps/Glad/include"
-IncludeDir["ImGui"] = "disarRay/deps/imgui"
+IncludeDir["imgui"] = "disarRay/deps/imgui"
+IncludeDir["glm"] = "disarRay/deps/glm"
+IncludeDir["spdlog"] = "disarRay/deps/spdlog/include"
 
 
 group "Dependencies"
@@ -30,11 +32,10 @@ project "disarRay"
 	location "disarRay"
 	kind "SharedLib"
 	language "C++"
-	cppdialect "C++17"
-	staticruntime "Off"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/disarRay")
-	objdir ("bin-obj/" .. outputdir .. "/disarRay")
+	objdir ("bin-int/" .. outputdir .. "/disarRay")
 
 	pchheader "drpch.h"
 	pchsource "disarRay/src/drpch.cpp"
@@ -42,17 +43,20 @@ project "disarRay"
 	files
 	{
 		"disarRay/src/**.h",
-		"disarRay/src/**.cpp"
+		"disarRay/src/**.cpp",
+		"disarRay/deps/glm/glm/**.hpp",
+		"disarRay/deps/glm/glm/**.inl"
 	}
 
 	includedirs
 	{
-		"disarRay/deps/spdlog/include",
 		"disarRay/src/disarRay",
 		"disarRay/src",
+		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.imgui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -66,38 +70,44 @@ project "disarRay"
 	defines "GLFW_INCLUDE_NONE"
 
 	filter "system:windows"
+		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
 		{
 			"DRAY_PLAT_WIN",
-			"DRAY_BUILD"
+			"DRAY_BUILD",
+			"GLFW_INCLUDE_NONE"
+		}
+
+		postbuildcommands
+		{
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
 		defines "DRAY_DEBUG"
-		symbols "On"
 		runtime "Debug"
+		symbols "On"
 
 	filter "configurations:Release"
 		defines "DRAY_RELEASE"
-		optimize "On"
 		runtime "Release"
+		optimize "On"
 
 	filter "configurations:Deploy"
 		defines "DRAY_DEPLOY"
-		optimize "On"
 		runtime "Release"
+		optimize "On"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
-	staticruntime "Off"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/Sandbox")
-	objdir ("bin-obj/" .. outputdir .. "/Sandbox")
+	objdir ("bin-int/" .. outputdir .. "/Sandbox")
 
 	files
 	{
@@ -107,17 +117,21 @@ project "Sandbox"
 
 	includedirs
 	{
-		"disarRay/deps/spdlog/include",
 		"disarRay/src/disarRay",
-		"disarRay/src"
+		"disarRay/src",
+		"%{IncludeDir.imgui}",
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
 	{
-		"disarRay"
+		"disarRay",
+		"ImGui"
 	}
 
 	filter "system:windows"
+		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -125,22 +139,17 @@ project "Sandbox"
 			"DRAY_PLAT_WIN"
 		}
 
-		postbuildcommands
-		{
-			("copy ..\\bin\\" .. outputdir .. "\\disarRay\\disarRay.dll ..\\bin\\" .. outputdir .. "\\Sandbox\\")
-		}
-
 	filter "configurations:Debug"
 		defines "DRAY_DEBUG"
-		symbols "On"
 		runtime "Debug"
+		symbols "On"
 
 	filter "configurations:Release"
 		defines "DRAY_RELEASE"
-		optimize "On"
 		runtime "Release"
+		optimize "On"
 
 	filter "configurations:Deploy"
 		defines "DRAY_DEPLOY"
-		optimize "On"
 		runtime "Release"
+		optimize "On"

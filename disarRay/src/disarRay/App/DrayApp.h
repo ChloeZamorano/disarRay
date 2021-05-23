@@ -1,10 +1,11 @@
 #pragma once
 
 #include "DrayIntern.h"
+
 #include "Window.h"
+#include "ImGui/ImGuiLayer.h"
 #include "Layers/LayerStack.h"
 #include "Events/AppEvent.h"
-#include "Window.h"
 
 namespace Dray
 {
@@ -25,7 +26,7 @@ namespace Dray
 
 		inline Window& GetWindow() { return *m_Window; }
 
-		static inline DrayApp& GetApp() { return *s_Instance; }
+		static inline DrayApp& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
@@ -33,6 +34,7 @@ namespace Dray
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		ImGuiLayer* m_ImGuiLayer;
 
 
 		static DrayApp* s_Instance;

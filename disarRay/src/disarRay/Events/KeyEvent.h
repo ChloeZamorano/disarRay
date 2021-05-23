@@ -9,7 +9,7 @@ namespace Dray
 	public:
 		inline i32 GetKeyCode() const { return m_KeyCode; }
 
-		DRAY_EVENT_CATEGORY(Keyboard | Input)
+		DRAY_EVENT_CATEGORY(KeyboardEventCategory | InputEventCategory)
 
 	protected:
 		KeyEvent(i32 code) :

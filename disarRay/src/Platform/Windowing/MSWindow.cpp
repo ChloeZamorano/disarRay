@@ -162,14 +162,14 @@ namespace Dray
 		DRAY_ENGINE_INFO("GLFW terminated.");
 	}
 
-	void MSWindow::RenderUpdate(LayerStack& stack)
+	void MSWindow::RenderStage1()
 	{
 		glClearColor(1, 0, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
+	}
 
-		for (Layer* layer : stack)
-			layer->OnUpdate();
-
+	void MSWindow::RenderStage2()
+	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}

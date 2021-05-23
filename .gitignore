@@ -1,0 +1,17 @@
+# Directories
+.vs/
+bin/
+bin-obj/
+disarRay/deps/Glad/bin/
+disarRay/deps/Glad/bin-int/
+disarRay/deps/GLFW/bin/
+disarRay/deps/GLFW/bin-int/
+disarRay/deps/imgui/bin/
+disarRay/deps/imgui/bin-int/
+
+# Files
+*.user
+*.sln
+*.ini
+*.vcxproj
+*.filters

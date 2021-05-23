@@ -21,7 +21,7 @@ namespace Dray
 		}
 
 		DRAY_EVENT_TYPE(MouseMoved)
-		DRAY_EVENT_CATEGORY(Mouse | Input)
+		DRAY_EVENT_CATEGORY(MouseEventCategory | InputEventCategory)
 
 	private:
 		f32 m_MouseX, m_MouseY;
@@ -44,7 +44,7 @@ namespace Dray
 		inline f32 GetYOffset() const { return m_YOffset; }
 
 		DRAY_EVENT_TYPE(MouseScrolled)
-		DRAY_EVENT_CATEGORY(Mouse | Input)
+		DRAY_EVENT_CATEGORY(MouseEventCategory | InputEventCategory)
 
 	private:
 		f32 m_XOffset, m_YOffset;
@@ -55,7 +55,7 @@ namespace Dray
 	public:
 		inline int GetMouseButton() const { return m_Button; }
 
-		DRAY_EVENT_CATEGORY(Mouse | Input)
+		DRAY_EVENT_CATEGORY(MouseEventCategory | InputEventCategory)
 
 	protected:
 		MouseButtonEvent(i32 btn) :

@@ -1,6 +1,7 @@
 ﻿#include "drpch.h"
 #include "DrayApp.h"
 
+#include "Input.h"
 #include <glad/glad.h>
 
 namespace Dray
@@ -16,6 +17,11 @@ namespace Dray
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(DRAY_BIND_FN(DrayApp::OnEvent));
+
+		Input::MakePoller();
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	DrayApp::~DrayApp() {}
@@ -23,11 +29,13 @@ namespace Dray
 	void DrayApp::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void DrayApp::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	void DrayApp::OnEvent(Event& e)
@@ -62,7 +70,17 @@ namespace Dray
 	{
 		while (m_Running)
 		{
-			m_Window->RenderUpdate(m_LayerStack);
+			m_Window->RenderStage1();
+
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
+
+			m_Window->RenderStage2();
 		}
 	}
 

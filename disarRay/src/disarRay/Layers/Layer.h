@@ -2,6 +2,7 @@
 
 #include "DrayIntern.h"
 #include "Events/Event.h"
+#include "imgui.h"
 
 namespace Dray
 {
@@ -14,6 +15,7 @@ namespace Dray
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
+		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 
 		inline const str8& GetName() const { return m_DebugName; }

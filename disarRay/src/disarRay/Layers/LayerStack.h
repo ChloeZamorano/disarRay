@@ -25,6 +25,6 @@ namespace Dray
 
 	private:
 		Stack	m_Layers;
-		StackIt m_LayerInsert;
+		u32 m_LayerInsertIndex = 0;
 	};
 }

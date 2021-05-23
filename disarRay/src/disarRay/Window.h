@@ -26,16 +26,18 @@ namespace Dray
 
 		virtual ~Window() {}
 
-		virtual void RenderUpdate(LayerStack& stack) = 0;
+		virtual void RenderStage1() = 0;
+		virtual void RenderStage2() = 0;
 
 		virtual u32 GetWidth() const = 0;
 		virtual u32 GetHeight() const = 0;
+
+		virtual void* GetNativeWindow() const = 0;
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		virtual void* GetGLFWWindow() const = 0;
 
 		static Window* Create(const WindowProps& data = WindowProps());
 	};

@@ -21,7 +21,7 @@ namespace Dray
 		}
 
 		DRAY_EVENT_TYPE(WindowResize)
-		DRAY_EVENT_CATEGORY(App)
+		DRAY_EVENT_CATEGORY(AppEventCategory)
 	private:
 		u32 m_Width, m_Height;
 	};
@@ -32,7 +32,7 @@ namespace Dray
 		WindowCloseEvent() {}
 
 		DRAY_EVENT_TYPE(WindowClose)
-		DRAY_EVENT_CATEGORY(App)
+		DRAY_EVENT_CATEGORY(AppEventCategory)
 	};
 
 	class DRAY_API AppTickEvent : public Event
@@ -41,7 +41,7 @@ namespace Dray
 		AppTickEvent() {}
 
 		DRAY_EVENT_TYPE(AppTick)
-		DRAY_EVENT_CATEGORY(App)
+		DRAY_EVENT_CATEGORY(AppEventCategory)
 	};
 
 	class DRAY_API AppUpdateEvent : public Event
@@ -50,7 +50,7 @@ namespace Dray
 		AppUpdateEvent() {}
 
 		DRAY_EVENT_TYPE(AppUpdate)
-		DRAY_EVENT_CATEGORY(App)
+		DRAY_EVENT_CATEGORY(AppEventCategory)
 	};
 
 	class DRAY_API AppRenderEvent : public Event
@@ -59,6 +59,6 @@ namespace Dray
 		AppRenderEvent() {}
 
 		DRAY_EVENT_TYPE(AppRender)
-		DRAY_EVENT_CATEGORY(App)
+		DRAY_EVENT_CATEGORY(AppEventCategory)
 	};
 }

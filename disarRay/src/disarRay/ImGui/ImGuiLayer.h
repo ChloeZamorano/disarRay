@@ -1,12 +1,14 @@
 #pragma once
 
 #include "DrayIntern.h"
-#include "Layers/Layer.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/AppEvent.h"
 
-namespace Dray
+#include "Layers/Layer.h"
+#include "Events/AppEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+#include "imgui.h"
+
+namespace Dray 
 {
 	class DRAY_API ImGuiLayer : public Layer
 	{
@@ -14,21 +16,16 @@ namespace Dray
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate();
-		void OnEvent(Event& e);
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
+
+		static ImGuiContext* GetContext();
+
+		void Begin();
+		void End();
 
 	private:
-		bool OnMouseButtonDown(MouseButtonDownEvent& e);
-		bool OnMouseButtonUp(MouseButtonUpEvent& e);
-		bool OnMouseMoved(MouseMovedEvent& e);
-		bool OnMouseScrolled(MouseScrolledEvent& e);
-		bool OnKeyDown(KeyDownEvent& e);
-		bool OnKeyUp(KeyUpEvent& e);
-		bool OnKeyTyped(KeyTypedEvent& e);
-		bool OnWindowResized(WindowResizeEvent& e);
-
-		f32 m_Time = 0.0f;
+		float m_Time = 0.0f;
 	};
 }
