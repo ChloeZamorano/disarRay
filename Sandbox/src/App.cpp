@@ -1,6 +1,5 @@
 #include <Dray.h>
 
-#define IMGUI_IMPL_API
 #include <imgui.h>
 
 class ExampleLayer : public Dray::Layer

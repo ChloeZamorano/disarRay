@@ -2,10 +2,14 @@
 
 // DLL importing/exporting
 #ifdef DRAY_PLAT_WIN
-	#ifdef DRAY_BUILD
-		#define DRAY_API __declspec(dllexport)
+	#ifdef DRAY_SHARED_LIB
+		#ifdef DRAY_BUILD
+			#define DRAY_API __declspec(dllexport)
+		#else
+			#define DRAY_API __declspec(dllimport)
+		#endif
 	#else
-		#define DRAY_API __declspec(dllimport)
+		#define DRAY_API
 	#endif
 #else
 	#error Platform not supported by disarRay.

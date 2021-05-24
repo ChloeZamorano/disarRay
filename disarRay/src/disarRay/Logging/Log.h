@@ -20,13 +20,7 @@ namespace Dray
 		static std::shared_ptr<spdlog::logger> clientLogger;
 	};
 }
-
-#define DRAY_ENGINE_TRACE(x, ...)	Dray::Log::GetEngineLogger()->trace		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
-#define DRAY_ENGINE_INFO(x, ...)	Dray::Log::GetEngineLogger()->info		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
-#define DRAY_ENGINE_WARN(x, ...)	Dray::Log::GetEngineLogger()->warn		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
-#define DRAY_ENGINE_ERROR(x, ...)	Dray::Log::GetEngineLogger()->error		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
-#define DRAY_ENGINE_FATAL(x, ...)	Dray::Log::GetEngineLogger()->critical	((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
-																					
+																				
 #define DRAY_TRACE(x, ...)			Dray::Log::GetClientLogger()->trace		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
 #define DRAY_INFO(x, ...)			Dray::Log::GetClientLogger()->info		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
 #define DRAY_WARN(x, ...)			Dray::Log::GetClientLogger()->warn		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
@@ -39,4 +33,10 @@ namespace Dray
 	#define DRAY_ENGINE_WARN(...)
 	#define DRAY_ENGINE_ERROR(...)
 	#define DRAY_ENGINE_FATAL(...)
+#else
+	#define DRAY_ENGINE_TRACE(x, ...)	Dray::Log::GetEngineLogger()->trace		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
+	#define DRAY_ENGINE_INFO(x, ...)	Dray::Log::GetEngineLogger()->info		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
+	#define DRAY_ENGINE_WARN(x, ...)	Dray::Log::GetEngineLogger()->warn		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
+	#define DRAY_ENGINE_ERROR(x, ...)	Dray::Log::GetEngineLogger()->error		((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
+	#define DRAY_ENGINE_FATAL(x, ...)	Dray::Log::GetEngineLogger()->critical	((str8)"<{0}, {1}> " + (str8)x, __FILENAME__, __LINE__, __VA_ARGS__)
 #endif

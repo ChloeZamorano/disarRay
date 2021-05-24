@@ -76,7 +76,7 @@ namespace Dray
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		DrayApp& app = DrayApp::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2((f32)app.GetWindow().GetWidth(), (f32)app.GetWindow().GetHeight());
 
 		// Rendering
 		ImGui::Render();

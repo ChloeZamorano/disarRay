@@ -30,9 +30,10 @@ group ""
 
 project "disarRay"
 	location "disarRay"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/disarRay")
 	objdir ("bin-int/" .. outputdir .. "/disarRay")
@@ -67,10 +68,13 @@ project "disarRay"
 		"opengl32.lib"
 	}
 
-	defines "GLFW_INCLUDE_NONE"
+	defines
+	{
+		"GLFW_INCLUDE_NONE",
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -80,31 +84,27 @@ project "disarRay"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-		}
-
 	filter "configurations:Debug"
 		defines "DRAY_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "DRAY_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Deploy"
 		defines "DRAY_DEPLOY"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/Sandbox")
 	objdir ("bin-int/" .. outputdir .. "/Sandbox")
@@ -131,7 +131,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -142,14 +141,14 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "DRAY_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "DRAY_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Deploy"
 		defines "DRAY_DEPLOY"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
