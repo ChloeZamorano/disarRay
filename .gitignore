@@ -1,7 +1,7 @@
 # Directories
 .vs/
 bin/
-bin-obj/
+bin-int/
 disarRay/deps/Glad/bin/
 disarRay/deps/Glad/bin-int/
 disarRay/deps/GLFW/bin/
