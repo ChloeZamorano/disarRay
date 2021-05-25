@@ -11,17 +11,75 @@ namespace Dray
 	DrayApp::DrayApp()
 	{
 		DRAY_ENGINE_ASSERT(!s_Instance,
-			"DrayApp is a singleton, cannot have more than one per instance!",
-			"DrayApp singleton verified, creating new DrayApp now!")
-		s_Instance = this;
+			"DrayApp is a singleton, cannot have more than one per instance!")
+			s_Instance = this;
+
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(DRAY_BIND_FN(DrayApp::OnEvent));
 
+
 		Input::MakePoller();
+
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+
+		m_VAO.reset(VertexArray::Create());
+
+		f32 verts[7 * 4] =
+		{
+			-0.5f,  0.5f, 0.0f,		0.80f, 0.25f, 0.25f, 1.0f,
+			 0.5f,  0.5f, 0.0f,		0.25f, 0.80f, 0.25f, 1.0f,
+			 0.5f, -0.5f, 0.0f,		0.25f, 0.25f, 0.80f, 1.0f,
+			-0.5f, -0.5f, 0.0f,		0.80f, 0.80f, 0.80f, 1.0f,
+		};
+		std::shared_ptr<VertexBuffer> VBO;
+		VBO.reset(VertexBuffer::Create(verts, sizeof(verts)));
+		VBO->SetLayout(VertexLayout{
+			{ ShaderDataType::Float3, "a_Pos" },
+			{ ShaderDataType::Float4, "a_Col" },
+			});
+		m_VAO->AddVertexBuffer(VBO);
+
+		u32 quads[4] =
+		{
+			0, 1, 2, 3
+		};
+		std::shared_ptr<IndexBuffer> IBO;
+		IBO.reset(IndexBuffer::Create(quads, sizeof(quads) / sizeof(u32)));
+		IBO.reset(IndexBuffer::Create(quads, sizeof(quads) / sizeof(u32)));
+		m_VAO->SetIndexBuffer(IBO);
+
+		str8 vertSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Pos;
+			layout(location = 1) in vec4 a_Col;
+
+			out vec4 v_Col;
+
+			void main()
+			{
+				gl_Position = vec4(a_Pos, 1);
+				v_Col = a_Col;
+			}
+)";
+		str8 pixelSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 col;
+
+			in vec4 v_Col;
+
+			void main()
+			{
+				col = vec4(.8, .075, .12, 1);
+				col = v_Col;
+			}
+)";
+		m_SO.reset(new Shader(vertSrc, pixelSrc));
 	}
 
 	DrayApp::~DrayApp() {}
@@ -71,6 +129,10 @@ namespace Dray
 		while (m_Running)
 		{
 			m_Window->RenderStage1();
+
+			m_SO->Bind();
+			m_VAO->Bind();
+			glDrawElements(GL_QUADS, m_VAO->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

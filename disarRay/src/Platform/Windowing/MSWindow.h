@@ -1,8 +1,9 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-
 #include "Window.h"
+#include "Rasterizer/RasterContext.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Dray
 {
@@ -38,6 +39,7 @@ namespace Dray
 		};
 
 		GLFWwindow* m_Window;
+		RasterContext* m_Context;
 
 		WindowData m_Data;
 	};

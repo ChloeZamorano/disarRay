@@ -96,16 +96,12 @@
 
 // Assertion
 #ifdef DRAY_DEBUG
-	#define DRAY_ENGINE_ASSERT(x, y, z)						\
+	#define DRAY_ENGINE_ASSERT(x, y)						\
 	{														\
 		if(x == 0)											\
 		{													\
 			DRAY_ENGINE_ERROR("Assetion failed: {2}", y);	\
 			DRAY_BREAK;										\
-		}													\
-		else												\
-		{													\
-			DRAY_ENGINE_INFO("Assetion successful: {2}", z);\
 		}													\
 	}
 	#define DRAY_ASSERT(x, y, z)						\
@@ -114,10 +110,6 @@
 		{												\
 			DRAY_ERROR("Assetion failed: {2}", y);		\
 			DRAY_BREAK;									\
-		}												\
-		else											\
-		{												\
-			DRAY_INFO("Assetion successful: {2}", z);	\
 		}												\
 	}
 #else

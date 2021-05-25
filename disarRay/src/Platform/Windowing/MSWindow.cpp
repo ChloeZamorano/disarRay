@@ -1,8 +1,6 @@
 #include "drpch.h"
 #include "MSWindow.h"
 
-#include <glad/glad.h>
-
 #include "DrayIntern.h"
 #include "Events/AppEvent.h"
 #include "Events/KeyEvent.h"
@@ -38,15 +36,11 @@ namespace Dray
 		m_Data.Title = data.Title;
 		m_Data.Width = data.Width;
 		m_Data.Height = data.Height;
-	
-		DRAY_ENGINE_INFO("Creating MS Window \"{2}\" ({3}, {4})", data.Title, data.Width, data.Height);
 		
 		// Initialize GLFW
 		if (!s_GLFWInitialized)
 		{
-			DRAY_ENGINE_VERIFY(glfwInit(),
-				"Could not initialize GLFW!",
-				"GLFW initialized correctly!")
+			glfwInit();
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 		
@@ -55,16 +49,12 @@ namespace Dray
 		
 		// Create window, as well as a couple other minor things
 		m_Window = glfwCreateWindow(data.Width, data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		DRAY_ENGINE_VERIFY(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress),
-			"Could not initialize Glad!",
-			"Glad initialized correctly!")
+
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
-
-		DRAY_ENGINE_INFO("OpenGL version: {2}", glGetString(GL_VERSION));
-		DRAY_ENGINE_INFO("GLFW version: {2}.{3}.{4}", GLFW_VERSION_MAJOR, GLFW_VERSION_MINOR, GLFW_VERSION_REVISION);
 
 		// GLFW Callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* wdw, int w, int h)
@@ -164,14 +154,13 @@ namespace Dray
 
 	void MSWindow::RenderStage1()
 	{
-		glClearColor(1, 0, 1, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		m_Context->ClearColor(.125f, .075f, .125f, 1);
 	}
 
 	void MSWindow::RenderStage2()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void MSWindow::SetVSync(bool enabled)

@@ -6,6 +6,10 @@
 #include "ImGui/ImGuiLayer.h"
 #include "Layers/LayerStack.h"
 #include "Events/AppEvent.h"
+// TEMP
+#include "Rasterizer/Shader.h"
+#include "Rasterizer/Buffer.h"
+#include "Rasterizer/VertexArray.h"
 
 namespace Dray
 {
@@ -36,6 +40,8 @@ namespace Dray
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
 
+		std::shared_ptr<Shader> m_SO;
+		std::shared_ptr<VertexArray> m_VAO;
 
 		static DrayApp* s_Instance;
 	};
