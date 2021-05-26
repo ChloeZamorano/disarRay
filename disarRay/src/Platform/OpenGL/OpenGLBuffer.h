@@ -2,7 +2,7 @@
 
 #include "DrayIntern.h"
 
-#include "Rasterizer/Buffer.h"
+#include "Renderer/Buffer.h"
 
 namespace Dray
 {

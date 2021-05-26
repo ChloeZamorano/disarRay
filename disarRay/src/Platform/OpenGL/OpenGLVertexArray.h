@@ -2,7 +2,7 @@
 
 #include "DrayIntern.h"
 
-#include "Rasterizer/VertexArray.h"
+#include "Renderer/VertexArray.h"
 
 namespace Dray
 {

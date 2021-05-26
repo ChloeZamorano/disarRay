@@ -26,8 +26,7 @@ namespace Dray
 
 		virtual ~Window() {}
 
-		virtual void RenderStage1() = 0;
-		virtual void RenderStage2() = 0;
+		virtual void OnUpdate() = 0;
 
 		virtual u32 GetWidth() const = 0;
 		virtual u32 GetHeight() const = 0;

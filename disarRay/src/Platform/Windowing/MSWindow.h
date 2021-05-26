@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include "Window.h"
-#include "Rasterizer/RasterContext.h"
+#include "Renderer/RenderContext.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Dray
@@ -13,8 +13,7 @@ namespace Dray
 		MSWindow(const WindowProps& data);
 		~MSWindow();
 
-		void RenderStage1() override;
-		void RenderStage2() override;
+		void OnUpdate() override;
 
 		inline u32 GetWidth() const override { return m_Data.Width; }
 		inline u32 GetHeight() const override { return m_Data.Height; }
@@ -39,7 +38,7 @@ namespace Dray
 		};
 
 		GLFWwindow* m_Window;
-		RasterContext* m_Context;
+		RenderContext* m_Context;
 
 		WindowData m_Data;
 	};

@@ -1,10 +1,12 @@
 #include "drpch.h"
 #include "MSWindow.h"
 
+#include <glad/glad.h>
 #include "DrayIntern.h"
 #include "Events/AppEvent.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
+#include "App/DrayApp.h"
 
 namespace Dray
 {
@@ -65,6 +67,11 @@ namespace Dray
 
 				WindowResizeEvent e((u32)w, (u32)h);
 				data.EventCallback(e);
+
+				glViewport(0, 0, w, h);
+
+				DrayApp::Get().DrawStage1();
+				DrayApp::Get().DrawStage2();
 			});
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* wdw)
 			{
@@ -152,12 +159,7 @@ namespace Dray
 		DRAY_ENGINE_INFO("GLFW terminated.");
 	}
 
-	void MSWindow::RenderStage1()
-	{
-		m_Context->ClearColor(.125f, .075f, .125f, 1);
-	}
-
-	void MSWindow::RenderStage2()
+	void MSWindow::OnUpdate()
 	{
 		glfwPollEvents();
 		m_Context->SwapBuffers();
@@ -168,7 +170,6 @@ namespace Dray
 		glfwSwapInterval(enabled ? 1 : 0);
 
 		m_Data.VSync = enabled;
-		DRAY_ENGINE_INFO("VSync: {0}", IsVSync());
 	}
 
 	bool MSWindow::IsVSync() const

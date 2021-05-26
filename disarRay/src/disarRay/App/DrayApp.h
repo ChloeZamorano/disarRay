@@ -7,9 +7,9 @@
 #include "Layers/LayerStack.h"
 #include "Events/AppEvent.h"
 // TEMP
-#include "Rasterizer/Shader.h"
-#include "Rasterizer/Buffer.h"
-#include "Rasterizer/VertexArray.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace Dray
 {
@@ -21,6 +21,8 @@ namespace Dray
 
 
 		void Run();
+		void DrawStage1();
+		void DrawStage2();
 
 
 		void OnEvent(Event& e);

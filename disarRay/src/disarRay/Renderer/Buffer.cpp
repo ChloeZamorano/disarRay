@@ -1,19 +1,19 @@
 #include "drpch.h"
 #include "Buffer.h"
 
-#include "Rasterizer.h"
+#include "Renderer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Dray
 {
 	VertexBuffer* VertexBuffer::Create(f32* verts, u32 size)
 	{
-		switch (Rasterizer::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-		case RasterizerAPI::None:
+		case RendererAPI::API::None:
 			return nullptr;
 
-		case RasterizerAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLVertexBuffer(verts, size);
 
 		default:
@@ -23,12 +23,12 @@ namespace Dray
 
 	IndexBuffer* IndexBuffer::Create(u32* indices, u32 count)
 	{
-		switch (Rasterizer::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-		case RasterizerAPI::None:
+		case RendererAPI::API::None:
 			return nullptr;
 
-		case RasterizerAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLIndexBuffer(indices, count);
 
 		default:

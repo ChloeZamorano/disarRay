@@ -1,16 +1,16 @@
 #include "drpch.h"
 #include "VertexArray.h"
 
-#include "Rasterizer.h"
+#include "Renderer.h"
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Dray
 {
 	VertexArray* VertexArray::Create()
 	{
-		switch (Rasterizer::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-		case RasterizerAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLVertexArray();
 
 		default:
